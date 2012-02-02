@@ -1,0 +1,17 @@
+body {
+	margin: 0 auto;
+	width: 864px;
+	background-color : lightGray;
+}
+
+p {
+	line-height : 18px;
+	padding : 0 9px;
+	margin : 0 0 18px;
+}
+
+#somediv {
+	margin : 0 3px;
+	background-color : green;
+	height : 54px;
+}
