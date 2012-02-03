@@ -1,6 +1,7 @@
 var containerID = "grid-checker",
     fixtureID = "qunit-fixture",
-    columnClass = "gc-column";
+    columnClass = "gc-column",
+    rowClass = "gc-row";
 
 module("Main", {
     setup: function () {
@@ -70,4 +71,14 @@ test("Correct number of columns generated for target width", function () {
     gridChecker(testWidth, testMargin, 0, 0, fixtureID);
     columns = document.getElementsByClassName(columnClass);
     equals(columns.length, 5, "Expect 5 columns for a container of width 550px");
+});
+
+test("Correct height of rows", function () {
+    'use strict';
+    var testRows = 18,
+        rows;
+
+    gridChecker(102, 3, testRows, 0, fixtureID);
+    rows = document.getElementsByClassName(rowClass);
+    equals(rows[0].offsetHeight, 18, "Expect the height to be 18");
 });

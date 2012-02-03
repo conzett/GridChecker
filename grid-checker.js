@@ -61,7 +61,7 @@ var gridChecker = function (ColumnWidth, ColumnMargin, LineHeight, InnerPadding,
 
 	for (i = 0; i < lineNumber; i += 1) {
 		line = document.createElement('div');
-		line.className = "gc-line";
+		line.className = "gc-row";
 		t = s;
 		t += 'top: ' + (i * LineHeight) + 'px;';
 		t += 'background-color: ';
