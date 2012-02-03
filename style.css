@@ -6,12 +6,15 @@ body {
 
 p {
 	line-height : 18px;
-	padding : 0 9px;
+	padding : 6px;
 	margin : 0 0 18px;
 }
 
-#somediv {
+div {
 	margin : 0 3px;
+}
+
+#somediv {	
 	background-color : green;
 	height : 54px;
 }
