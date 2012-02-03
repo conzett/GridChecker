@@ -1,4 +1,20 @@
-var gridChecker = function (ColumnWidth, ColumnMargin, RowHeight, InnerPadding, Target) {
+var timout = false,
+	oldResize = window.onresize,
+	gridChecker,
+	args = [];
+
+window.onresize = function () {
+	'use strict';
+	if (oldResize) {
+        oldResize();
+    }
+    if (timout !== false) {
+	    clearTimeout(timout);
+	    timout = setTimeout(function () { gridChecker.apply(this, args); }, 500);
+	}
+};
+
+gridChecker = function (ColumnWidth, ColumnMargin, RowHeight, InnerPadding, Target) {
 	'use strict';
 
 	var container,
@@ -13,6 +29,10 @@ var gridChecker = function (ColumnWidth, ColumnMargin, RowHeight, InnerPadding, 
 		rowContainer,
 		target = document.getElementById(Target) || document.getElementsByTagName('body')[0];
 
+	for (i = 0; i < arguments.length; i += 1) {
+		args[i] = arguments[i];
+	}
+
 	ColumnWidth = ColumnWidth || 60;
 	ColumnMargin = ColumnMargin || 10;
 	RowHeight = RowHeight || 18;
@@ -20,6 +40,11 @@ var gridChecker = function (ColumnWidth, ColumnMargin, RowHeight, InnerPadding, 
 
 	columnNumber = parseInt(target.offsetWidth / (ColumnWidth + ColumnMargin), 10);
 	rowNumber = parseInt(window.innerHeight / RowHeight, 10);
+	container = document.getElementById('grid-checker');
+
+	if (container !== null) {
+		container.parentNode.removeChild(container);
+	}
 
 	s = 'height: 100%;';
 	s += 'position: absolute;';
@@ -82,4 +107,5 @@ var gridChecker = function (ColumnWidth, ColumnMargin, RowHeight, InnerPadding, 
 
 	container.appendChild(rowContainer);
 	target.appendChild(container);
+
 };
