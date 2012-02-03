@@ -1,19 +1,20 @@
-var gridChecker = function (ColumnWidth, ColumnMargin, LineHeight, InnerPadding, Target) {
+var gridChecker = function (ColumnWidth, ColumnMargin, RowHeight, InnerPadding, Target) {
 	'use strict';
 
 	var container,
 		column,
 		inner,
-		line,
+		row,
 		s,
 		i,
 		t,
 		columnNumber,
-		lineNumber,
+		rowNumber,
+		rowContainer,
 		target = document.getElementById(Target) || document.getElementsByTagName('body')[0];
 
 	columnNumber = parseInt(target.offsetWidth / (ColumnWidth + ColumnMargin), 10);
-	lineNumber = parseInt(window.innerHeight / LineHeight, 10);
+	rowNumber = parseInt(window.innerHeight / RowHeight, 10);
 
 	s = 'height: 100%;';
 	s += 'position: absolute;';
@@ -54,22 +55,26 @@ var gridChecker = function (ColumnWidth, ColumnMargin, LineHeight, InnerPadding,
 
 	s = "position: absolute;";
 	s += 'width: 100%;';
-	s += 'height: ' + LineHeight + 'px;';
-	s += 'z-index: 90;';
 	s += 'opacity: .2;';
 	s += 'filter:alpha(opacity=20);';
 
-	for (i = 0; i < lineNumber; i += 1) {
-		line = document.createElement('div');
-		line.className = "gc-row";
-		t = s;
-		t += 'top: ' + (i * LineHeight) + 'px;';
-		t += 'background-color: ';
+	rowContainer = document.createElement('div');
+	rowContainer.setAttribute('class', 'gc-row-container');
+	rowContainer.setAttribute('style', s);
+
+	s = 'height: ' + RowHeight + 'px;';
+
+	row = document.createElement('div');
+	row.className = "gc-row";
+
+	for (i = 0; i < rowNumber; i += 1) {
+		t = s + 'background-color: ';
 		t += (i % 2 === 0) ? 'blue' : 'white';
 		t += ';';
-		line.setAttribute('style', t);
-		container.appendChild(line.cloneNode(true));
+		row.setAttribute('style', t);
+		rowContainer.appendChild(row.cloneNode(true));
 	}
 
+	container.appendChild(rowContainer);
 	target.appendChild(container);
 };
