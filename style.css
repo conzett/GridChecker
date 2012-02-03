@@ -6,8 +6,8 @@ body {
 
 p {
 	line-height : 18px;
-	padding : 6px;
-	margin : 0 0 18px;
+	padding : 6px 6px 12px;
+	margin:  0;
 }
 
 div {
