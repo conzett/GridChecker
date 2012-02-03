@@ -13,6 +13,11 @@ var gridChecker = function (ColumnWidth, ColumnMargin, RowHeight, InnerPadding, 
 		rowContainer,
 		target = document.getElementById(Target) || document.getElementsByTagName('body')[0];
 
+	ColumnWidth = ColumnWidth || 60;
+	ColumnMargin = ColumnMargin || 10;
+	RowHeight = RowHeight || 18;
+	InnerPadding = InnerPadding || 6;
+
 	columnNumber = parseInt(target.offsetWidth / (ColumnWidth + ColumnMargin), 10);
 	rowNumber = parseInt(window.innerHeight / RowHeight, 10);
 
