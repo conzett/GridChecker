@@ -20,8 +20,18 @@
         <script src="grid-checker.js" type="text/javascript"></script>
         <script type="text/javascript">
             (function () {
-                module = { width : "102px", margin : "3px", height: "90px"};
-                gridChecker([module]);
+                var grids = [];
+                grids[0] = { width : "102px",
+                             margin : "0 3px 18px",
+                             height: "90px",
+                             color : "pink" };
+
+                grids[1] = { width : "90px",
+                             margin : "9px 9px 27px",
+                             height: "72px",
+                             color : "lightgray" };
+                
+                gridChecker(grids);
             })();
         </script>     
     </body>

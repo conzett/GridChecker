@@ -28,6 +28,7 @@ gridChecker = function (Grids, Target) {
 
 	var container,
 		i,
+		j,
 		containerStyle,
 		innerContainerStyle,
 		parseMargin,
@@ -100,8 +101,8 @@ gridChecker = function (Grids, Target) {
 	containerStyle += 'border: none !important; ';
 	containerStyle += 'width: ' + targetWidth + 'px !important; ';
 	containerStyle += 'padding: 0 !important; ';
-	containerStyle += 'opacity: .3 !important; ';
-	containerStyle += 'filter:alpha(opacity=30) !important; ';
+	containerStyle += 'opacity: .7 !important; ';
+	containerStyle += 'filter:alpha(opacity=70) !important; ';
 	containerStyle += 'overflow: hidden !important; ';
 
 	innerContainerStyle = containerStyle + 'height: 100% !important; ';
@@ -118,8 +119,8 @@ gridChecker = function (Grids, Target) {
 	container.setAttribute('id', 'grid-checker');
 	container.setAttribute('style', containerStyle);
 
-	for (i = 0; i < Grids.length; i += 1) {
-		container.appendChild((generate(Grids[i], i + 1)).cloneNode(true));
+	for (j = 0; j < Grids.length; j += 1) {
+		container.appendChild((generate(Grids[j], j + 1)).cloneNode(true));
 	}
 
 	target.appendChild(container);
