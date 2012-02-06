@@ -9,7 +9,7 @@ window.onresize = function () {
 	if (oldResize) {
         oldResize();
     }
-    if(timeOut != null) {
+    if (timeOut != null) {
 	    clearTimeout(timeOut);
 	}
 	timeOut = setTimeout(function () {gridChecker(gridsArg, targetArg)}, 250);
@@ -17,8 +17,6 @@ window.onresize = function () {
 
 gridChecker = function (Grids, Target) {
 	'use strict';
-
-	console.log("called");
 
 	/*  Module
 
@@ -69,7 +67,7 @@ gridChecker = function (Grids, Target) {
 		offsetHeight = (parseInt(moduleHeight, 10) + parseInt(m[0], 10) + parseInt(m[2], 10));
 
 		x = parseInt(targetWidth / offsetWidth, 10);
-		y = (offsetHeight) ? parseInt(window.innerHeight / offsetHeight, 10) : 1;
+		y = (offsetHeight) ? parseInt(window.innerHeight / offsetHeight, 10) + 1 : 1;
 		total = x * y;
 
 		container = document.createElement('div');
