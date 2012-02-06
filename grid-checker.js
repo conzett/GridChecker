@@ -14,111 +14,110 @@ window.onresize = function () {
 	}
 };
 
-gridChecker = function (ColumnWidth, ColumnMargin, RowHeight, InnerPadding, Target) {
+gridChecker = function (Grids, Target) {
 	'use strict';
 
+	/*  Module
+
+		width : 102px,
+		height : 100%,
+		margin : "0 3px",
+		color : #336699
+	*/
+
 	var container,
-		column,
-		inner,
-		row,
-		s,
 		i,
-		t,
-		columnNumber,
-		rowNumber,
-		rowContainer,
-		target = document.getElementById(Target) || document.getElementsByTagName('body')[0];
+		containerStyle,
+		innerContainerStyle,
+		parseMargin,
+		generate,
+		target = document.getElementById(Target) || document.getElementsByTagName('body')[0],
+		targetWidth = target.offsetWidth;
 
-	for (i = 0; i < arguments.length; i += 1) {
-		args[i] = arguments[i];
-	}
+	Grids = Grids || [];
 
-	ColumnWidth = ColumnWidth || 60;
-	ColumnMargin = ColumnMargin || 10;
-	RowHeight = RowHeight || 18;
-	InnerPadding = InnerPadding || 6;
+	parseMargin = function (Margin) {
+		var a = Margin.split(" ");
 
-	columnNumber = parseInt(target.offsetWidth / (ColumnWidth + ColumnMargin), 10);
-	rowNumber = parseInt(window.innerHeight / RowHeight, 10);
+		for (i = 0; i < 4; i += 1) {
+			a[i] = a[i] || a[i - 2] || a[i - 1];
+		}
+
+		return a;
+	};
+
+	generate = function (Module, Index) {
+		var m = parseMargin(Module.margin),
+			moduleWidth = Module.width,
+			moduleHeight = Module.height,
+			moduleColor = Module.color || '#336699',
+			offsetWidth,
+			offsetHeight,
+			module,
+			x,
+			y,
+			total,
+			style,
+			container;
+
+		offsetWidth = (parseInt(moduleWidth, 10) + parseInt(m[1], 10) + parseInt(m[3], 10));
+		offsetHeight = (parseInt(moduleHeight, 10) + parseInt(m[0], 10) + parseInt(m[2], 10));
+
+		x = parseInt(targetWidth / offsetWidth, 10);
+		y = (offsetHeight) ? parseInt(window.innerHeight / offsetHeight, 10) : 1;
+		total = x * y;
+
+		container = document.createElement('div');
+		container.setAttribute('class', 'gc-grid-' + Index);
+		container.setAttribute('style', innerContainerStyle);
+
+		style = 'margin: ' + m[0] + " " + m[1] + " " + m[2] + " " + m[3] + ' !important;';
+		style += 'background-color: ' + moduleColor + ' !important;';
+		style += 'height: 100% !important;';
+		style += 'width: ' + moduleWidth + ' !important;';
+		style += 'padding: 0 !important;';
+		style += 'border: none !important;';
+		style += 'float: left !important;';
+
+		if (moduleHeight) {
+			style += 'height: ' + moduleHeight + ' !important;';
+		}
+
+		for (i = 0; i < total; i += 1) {
+			module = document.createElement('div');
+			module.className = "gc-module-" + Index;
+			module.setAttribute('style', style);
+			container.appendChild(module.cloneNode(true));
+		}
+
+		return container;
+	};
+
+	containerStyle = 'margin: 0 !important; ';
+	containerStyle += 'border: none !important; ';
+	containerStyle += 'width: ' + targetWidth + 'px !important; ';
+	containerStyle += 'padding: 0 !important; ';
+	containerStyle += 'opacity: .3 !important; ';
+	containerStyle += 'filter:alpha(opacity=30) !important; ';
+	containerStyle += 'overflow: hidden !important; ';
+
+	innerContainerStyle = containerStyle + 'height: 100% !important; ';
+	innerContainerStyle += 'position: absolute !important; ';
+	innerContainerStyle += 'top: 0 !important; ';
+
 	container = document.getElementById('grid-checker');
 
 	if (container !== null) {
 		container.parentNode.removeChild(container);
 	}
 
-	s = 'height: 100% !important;';
-	s += 'position: absolute  !important;';
-	s += 'top: 0 !important;';
-	s += 'margin: 0 !important;';
-	s += 'border: none !important;';
-	s += 'padding: 0 !important;';
-	s += 'background-color: white !important;';
-	s += 'opacity: .3 !important;';
-	s += 'filter:alpha(opacity=30) !important;';
-	s += 'overflow: hidden !important;';
-
 	container = document.createElement('div');
 	container.setAttribute('id', 'grid-checker');
-	container.setAttribute('style', s);
+	container.setAttribute('style', containerStyle);
 
-	s = 'margin: 0 ' + InnerPadding + 'px  !important;';
-	s += 'background-color: Gray !important;';
-	s += 'height: 100% !important;';
-	s += 'opacity: .4 !important;';
-	s += 'filter:alpha(opacity=40) !important;';
-	s += 'padding: 0 !important;';
-	s += 'border: none !important;';
-
-	inner = document.createElement('div');
-	inner.setAttribute('class', 'gc-inner');
-	inner.setAttribute('style', s);
-
-	s = 'width: ' + ColumnWidth + 'px !important;';
-	s += 'margin: 0 ' + ColumnMargin + 'px !important;';
-	s += 'padding: 0 !important;';
-	s += 'border: none !important;';
-	s += 'height: 100% !important;';
-	s += 'background-color: pink !important;';
-	s += 'float: left !important;';
-
-	column = document.createElement('div');
-	column.className = "gc-column";
-	column.setAttribute('style', s);
-	column.appendChild(inner.cloneNode(true));
-
-	for (i = 0; i < columnNumber; i += 1) {
-		container.appendChild(column.cloneNode(true));
+	for (i = 0; i < Grids.length; i += 1) {
+		container.appendChild((generate(Grids[i], i + 1)).cloneNode(true));
 	}
 
-	s = "position: absolute !important;";
-	s += 'width: 100% !important;';
-	s += 'opacity: .2 !important;';
-	s += 'margin: 0 !important;';
-	s += 'padding: 0 !important;';
-	s += 'border: none !important;';
-	s += 'filter:alpha(opacity=20) !important;';
-
-	rowContainer = document.createElement('div');
-	rowContainer.setAttribute('class', 'gc-row-container');
-	rowContainer.setAttribute('style', s);
-
-	s = 'height: ' + RowHeight + 'px !important;';
-	s += 'margin: 0 !important;';
-	s += 'padding: 0 !important;';
-	s += 'border: none !important;';
-
-	row = document.createElement('div');
-	row.className = "gc-row";
-
-	for (i = 0; i < rowNumber; i += 1) {
-		t = s + 'background-color: ';
-		t += (i % 2 === 0) ? 'blue' : 'white';
-		t += ' !important;';
-		row.setAttribute('style', t);
-		rowContainer.appendChild(row.cloneNode(true));
-	}
-
-	container.appendChild(rowContainer);
 	target.appendChild(container);
-
 };

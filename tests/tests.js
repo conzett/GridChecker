@@ -1,7 +1,6 @@
 var containerID = "grid-checker",
     fixtureID = "qunit-fixture",
-    columnClass = "gc-column",
-    rowClass = "gc-row";
+    moduleClass = "gc-module-1";
 
 module("Main", {
     setup: function () {
@@ -28,7 +27,7 @@ test("Grid checker element is generated.", function () {
 
 test("Grid checker element is appended to specified target.", function () {
     'use strict';
-    gridChecker(0, 0, 0, 0, fixtureID);
+    gridChecker([], fixtureID);
     var element = document.getElementById(containerID);
     equals(element.parentNode.getAttribute('id'), fixtureID, "Expect the ID of the parent to be " + fixtureID);
 });
@@ -37,22 +36,22 @@ test("Generated width of columns is correct.", function () {
     'use strict';
     var testWidth = 102,
         actuWidth,
-        element;
-    gridChecker(testWidth, 0, 0, 0, fixtureID);
-    element = document.getElementsByClassName(columnClass)[0];
+        element,
+        module = { width : "102px", margin : "0 3px"};
+    gridChecker([module], fixtureID);
+    element = document.getElementsByClassName(moduleClass)[0];
     actuWidth = (element) ? element.style.width : '0px';
     equals(actuWidth, testWidth + "px", "Expect the width of the column to be " + testWidth);
 });
 
 test("Generated width of columns plus margins is correct.", function () {
     'use strict';
-    var testWidth = 102,
-        testMargin = 3,
-        offsetWidth = 108,
+    var offsetWidth = 108,
         actuWidth,
-        element;
-    gridChecker(testWidth, testMargin, 0, 0, fixtureID);
-    element = document.getElementsByClassName(columnClass)[0];
+        element,
+        module = { width : "102px", margin : "0 3px"};
+    gridChecker([module], fixtureID);
+    element = document.getElementsByClassName(moduleClass)[0];
     actuWidth = (element) ? element.offsetWidth : 0;
     actuWidth += parseInt(element.style.marginRight, 10) + parseInt(element.style.marginLeft, 10);
     equals(actuWidth, offsetWidth, "Expect the width of the column plus margin to be " + offsetWidth);
@@ -60,25 +59,40 @@ test("Generated width of columns plus margins is correct.", function () {
 
 test("Correct number of columns generated for target width", function () {
     'use strict';
-    var testWidth = 102,
-        testMargin = 3,
-        columns,
-        fixture;
+    var columns,
+        fixture,
+        module = { width : "102px", margin : "0 3px"};
 
     fixture = document.getElementById(fixtureID);
     fixture.setAttribute('style', 'width:550px');
 
-    gridChecker(testWidth, testMargin, 0, 0, fixtureID);
-    columns = document.getElementsByClassName(columnClass);
+    gridChecker([module], fixtureID);
+    columns = document.getElementsByClassName(moduleClass);
     equals(columns.length, 5, "Expect 5 columns for a container of width 550px");
 });
 
-test("Correct height of rows", function () {
+test("Generated height of columns is correct.", function () {
     'use strict';
-    var testRows = 18,
-        rows;
+    var testHeight = 90,
+        actuHeight,
+        element,
+        module = { width : "102px", margin : "3px", height : testHeight + "px"};
+    gridChecker([module], fixtureID);
+    element = document.getElementsByClassName(moduleClass)[0];
+    actuHeight = (element) ? element.style.height : '0px';
+    equals(actuHeight, testHeight + "px", "Expect the height of the module to be " + testHeight);
+});
 
-    gridChecker(102, 3, testRows, 0, fixtureID);
-    rows = document.getElementsByClassName(rowClass);
-    equals(rows[0].offsetHeight, 18, "Expect the height to be 18");
+test("Generated height of columns plus margins is correct.", function () {
+    'use strict';
+    var testHeight = 90,
+        offsetHeight = 96,
+        actuHeight,
+        element,
+        module = { width : "102px", margin : "3px", height : testHeight + "px"};
+    gridChecker([module], fixtureID);
+    element = document.getElementsByClassName(moduleClass)[0];
+    actuHeight = (element) ? element.offsetHeight : 0;
+    actuHeight += parseInt(element.style.marginTop, 10) + parseInt(element.style.marginBottom, 10);
+    equals(actuHeight, offsetHeight, "Expect the height of the module plus margin to be " + offsetHeight);
 });
