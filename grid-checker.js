@@ -9,10 +9,10 @@ window.onresize = function () {
 	if (oldResize) {
         oldResize();
     }
-    if (timeOut != null) {
+    if (timeOut !== null) {
 	    clearTimeout(timeOut);
 	}
-	timeOut = setTimeout(function () {gridChecker(gridsArg, targetArg)}, 250);
+	timeOut = setTimeout(function () { gridChecker(gridsArg, targetArg); }, 250);
 };
 
 gridChecker = function (Grids, Target) {
