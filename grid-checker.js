@@ -1,21 +1,24 @@
-var timout = false,
+var timeOut,
 	oldResize = window.onresize,
 	gridChecker,
-	args = [];
+	gridsArg,
+	targetArg;
 
 window.onresize = function () {
 	'use strict';
 	if (oldResize) {
         oldResize();
     }
-    if (timout !== false) {
-	    clearTimeout(timout);
-	    timout = setTimeout(function () { gridChecker.apply(this, args); }, 500);
+    if(timeOut != null) {
+	    clearTimeout(timeOut);
 	}
+	timeOut = setTimeout(function () {gridChecker(gridsArg, targetArg)}, 250);
 };
 
 gridChecker = function (Grids, Target) {
 	'use strict';
+
+	console.log("called");
 
 	/*  Module
 
@@ -35,6 +38,8 @@ gridChecker = function (Grids, Target) {
 		targetWidth = target.offsetWidth;
 
 	Grids = Grids || [];
+	gridsArg = Grids;
+	targetArg = Target;
 
 	parseMargin = function (Margin) {
 		var a = Margin.split(" ");
