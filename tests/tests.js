@@ -1,6 +1,8 @@
 var containerID = "grid-checker",
     fixtureID = "qunit-fixture",
-    moduleClass = "gc-module-1";
+    moduleClass = "gc-module-1",
+    buttonID = "gc-button-1",
+    gridID = "gc-grid-1";
 
 module("Main", {
     setup: function () {
@@ -95,4 +97,28 @@ test("Generated height of columns plus margins is correct.", function () {
     actuHeight = (element) ? element.offsetHeight : 0;
     actuHeight += parseInt(element.style.marginTop, 10) + parseInt(element.style.marginBottom, 10);
     equals(actuHeight, offsetHeight, "Expect the height of the module plus margin to be " + offsetHeight);
+});
+
+test("Check for generation of buttons.", function () {
+    'use strict';
+    var button,
+        module1 = { width : "102px", margin : "3px", height : "90px"};
+    gridChecker([module1], fixtureID);
+    button = document.getElementById(buttonID);
+    ok((button.length !== null), "Expect one buttons the number of modules, to be generated");
+});
+
+test("Toggle the grids when the appropriate button is clicked.", function () {
+    'use strict';
+    var button,
+        grid,
+        module1 = { width : "102px", margin : "3px", height : "90px"};
+    gridChecker([module1], fixtureID);
+    button = document.getElementById(buttonID);
+    grid = document.getElementById(gridID);
+    ok((grid.style.display !== 'none'), "Expect the grid to not be initially hidden");
+    button.click();
+    ok((grid.style.display === 'none'), "After clicking the button expect it to be hidden");
+    button.click();
+    ok((grid.style.display !== 'none'), "Back to being visible again");
 });

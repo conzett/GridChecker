@@ -30,15 +30,32 @@ gridChecker = function (Grids, Target) {
 		i,
 		j,
 		containerStyle,
+		buttonContainerStyle,
 		innerContainerStyle,
 		parseMargin,
 		generate,
 		target = document.getElementById(Target) || document.getElementsByTagName('body')[0],
-		targetWidth = target.offsetWidth;
+		targetWidth = target.offsetWidth,
+		buttonContainer,
+		gridButton,
+		toggleGrid;
 
 	Grids = Grids || [];
 	gridsArg = Grids;
 	targetArg = Target;
+
+	function handler(Value) {
+	    return function () {
+	        toggleGrid(Value);
+	    };
+	}
+
+	toggleGrid = function (ID) {
+		var grid = document.getElementById("gc-grid-" + ID);
+		if (grid !== null) {
+			grid.style.display = (grid.style.display === 'none') ? 'block' : 'none';
+		}
+	};
 
 	parseMargin = function (Margin) {
 		var a = Margin.split(" ");
@@ -72,7 +89,7 @@ gridChecker = function (Grids, Target) {
 		total = x * y;
 
 		container = document.createElement('div');
-		container.setAttribute('class', 'gc-grid-' + Index);
+		container.setAttribute('id', 'gc-grid-' + Index);
 		container.setAttribute('style', innerContainerStyle);
 
 		style = 'margin: ' + m[0] + " " + m[1] + " " + m[2] + " " + m[3] + ' !important;';
@@ -119,9 +136,25 @@ gridChecker = function (Grids, Target) {
 	container.setAttribute('id', 'grid-checker');
 	container.setAttribute('style', containerStyle);
 
+	buttonContainerStyle = 'position : fixed !important; ';
+	buttonContainerStyle += 'bottom : 0 !important; ';
+
+	buttonContainer = document.createElement('div');
+	buttonContainer.setAttribute('id', 'grid-checker-buttons');
+	buttonContainer.setAttribute('style', buttonContainerStyle);
+
 	for (j = 0; j < Grids.length; j += 1) {
 		container.appendChild((generate(Grids[j], j + 1)).cloneNode(true));
+
+		gridButton = document.createElement('button');
+		gridButton.setAttribute('value', j + 1);
+		gridButton.setAttribute('id', "gc-button-" + (j + 1));
+		gridButton.setAttribute('type', 'button');
+		gridButton.onclick = handler(j + 1);
+		gridButton.innerHTML = j + 1;
+		buttonContainer.appendChild(gridButton);
 	}
 
+	container.appendChild(buttonContainer);
 	target.appendChild(container);
 };
