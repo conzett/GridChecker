@@ -56,7 +56,7 @@ gridChecker = function (Grids, Target) {
 		if (grid !== null) {
 			grid.style.display = (grid.style.display === 'none') ? 'block' : 'none';
 		}
-		gridsArg[ID - 1].visible = false;
+		gridsArg[ID - 1].visible = (gridsArg[ID - 1].visible) ? false : true;
 	};
 
 	parseMargin = function (Margin) {
@@ -82,6 +82,8 @@ gridChecker = function (Grids, Target) {
 			total,
 			style,
 			container;
+
+		gridsArg[Index - 1].visible = (Module.visible === false) ? false : true;
 
 		offsetWidth = (parseInt(moduleWidth, 10) + parseInt(m[1], 10) + parseInt(m[3], 10));
 		offsetHeight = (parseInt(moduleHeight, 10) + parseInt(m[0], 10) + parseInt(m[2], 10));
