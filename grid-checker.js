@@ -23,7 +23,8 @@ gridChecker = function (Grids, Target) {
 		width : 102px,
 		height : 100%,
 		margin : "0 3px",
-		color : #336699
+		color : #336699,
+		visible : true
 	*/
 
 	var container,
@@ -55,6 +56,7 @@ gridChecker = function (Grids, Target) {
 		if (grid !== null) {
 			grid.style.display = (grid.style.display === 'none') ? 'block' : 'none';
 		}
+		gridsArg[ID - 1].visible = false;
 	};
 
 	parseMargin = function (Margin) {
@@ -91,6 +93,7 @@ gridChecker = function (Grids, Target) {
 		container = document.createElement('div');
 		container.setAttribute('id', 'gc-grid-' + Index);
 		container.setAttribute('style', innerContainerStyle);
+		container.style.display = (Module.visible === false) ? 'none' : 'block';
 
 		style = 'margin: ' + m[0] + " " + m[1] + " " + m[2] + " " + m[3] + ' !important;';
 		style += 'background-color: ' + moduleColor + ' !important;';

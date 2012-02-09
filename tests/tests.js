@@ -122,3 +122,12 @@ test("Toggle the grids when the appropriate button is clicked.", function () {
     button.click();
     ok((grid.style.display !== 'none'), "Back to being visible again");
 });
+
+test("Grids can be specified visible or hidden on creation.", function () {
+    'use strict';
+    var grid,
+        module1 = { width : "102px", margin : "3px", height : "90px", visible : false};
+    gridChecker([module1], fixtureID);
+    grid = document.getElementById(gridID);
+    ok((grid.style.display === 'none'), "Expect the grid to be initially hidden");
+});
