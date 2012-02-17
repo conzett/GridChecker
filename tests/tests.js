@@ -2,7 +2,10 @@ var containerID = "grid-checker",
     fixtureID = "qunit-fixture",
     moduleClass = "gc-module-1",
     buttonID = "gc-button-1",
-    gridID = "gc-grid-1";
+    gridID = "gc-grid-1",
+    gridID2 = "gc-grid-2",
+    hideButtonID = "gc-hide-all",
+    showButtonID = "gc-show-all";
 
 module("Main", {
     setup: function () {
@@ -130,4 +133,36 @@ test("Grids can be specified visible or hidden on creation.", function () {
     gridChecker([module1], fixtureID);
     grid = document.getElementById(gridID);
     ok((grid.style.display === 'none'), "Expect the grid to be initially hidden");
+});
+
+test("Test hiding all grids.", function () {
+    'use strict';
+    var button,
+        grid,
+        grid2,
+        module1 = { width : "102px", margin : "3px", height : "90px"},
+        module2 = { width : "90px", margin : "3px", height : "90px"};
+    gridChecker([module1, module2], fixtureID);
+    button = document.getElementById(hideButtonID);
+    grid = document.getElementById(gridID);
+    grid2 = document.getElementById(gridID2);
+    ok((grid.style.display !== 'none' && grid2.style.display !== 'none'), "Expect both grids to be initially visible");
+    button.click();
+    ok((grid.style.display === 'none' && grid2.style.display === 'none'), "After clicking the button expect them to be hidden");
+});
+
+test("Test showing all grids.", function () {
+    'use strict';
+    var button,
+        grid,
+        grid2,
+        module1 = { width : "102px", margin : "3px", height : "90px", visible : false},
+        module2 = { width : "90px", margin : "3px", height : "90px", visible : false};
+    gridChecker([module1, module2], fixtureID);
+    button = document.getElementById(showButtonID);
+    grid = document.getElementById(gridID);
+    grid2 = document.getElementById(gridID2);
+    ok((grid.style.display === 'none' && grid2.style.display === 'none'), "Expect both grids to be initially hidden");
+    button.click();
+    ok((grid.style.display !== 'none' && grid2.style.display !== 'none'), "After clicking the button expect them to be visible");
 });

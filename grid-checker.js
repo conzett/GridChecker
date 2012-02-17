@@ -39,7 +39,10 @@ gridChecker = function (Grids, Target) {
 		targetWidth = target.offsetWidth,
 		buttonContainer,
 		gridButton,
-		toggleGrid;
+		toggleGrid,
+		showButton,
+		hideButton,
+		showHideAll;
 
 	Grids = Grids || [];
 	gridsArg = Grids;
@@ -57,6 +60,14 @@ gridChecker = function (Grids, Target) {
 			grid.style.display = (grid.style.display === 'none') ? 'block' : 'none';
 		}
 		gridsArg[ID - 1].visible = (gridsArg[ID - 1].visible) ? false : true;
+	};
+
+	showHideAll = function (Value) {
+		var grid;
+		for (i = 0; i < Grids.length; i += 1) {
+			grid = document.getElementById("gc-grid-" + (i + 1));
+			grid.style.display = Value;
+		}
 	};
 
 	parseMargin = function (Margin) {
@@ -148,6 +159,21 @@ gridChecker = function (Grids, Target) {
 	buttonContainer.setAttribute('id', 'grid-checker-buttons');
 	buttonContainer.setAttribute('style', buttonContainerStyle);
 
+	showButton = document.createElement('button');
+	showButton.setAttribute('type', 'button');
+	showButton.setAttribute('id', "gc-show-all");		
+	showButton.onclick = function () { showHideAll('block'); };
+	showButton.innerHTML = "Show All";
+
+	hideButton = document.createElement('button');
+	hideButton.setAttribute('id', "gc-hide-all");
+	hideButton.setAttribute('type', 'button');	
+	hideButton.onclick = function () { showHideAll('none'); };
+	hideButton.innerHTML = "Hide All";
+
+	buttonContainer.appendChild(showButton);
+	buttonContainer.appendChild(hideButton);
+
 	for (j = 0; j < Grids.length; j += 1) {
 		container.appendChild((generate(Grids[j], j + 1)).cloneNode(true));
 
@@ -159,7 +185,7 @@ gridChecker = function (Grids, Target) {
 		gridButton.innerHTML = j + 1;
 		buttonContainer.appendChild(gridButton);
 	}
-
+		
 	container.appendChild(buttonContainer);
 	target.appendChild(container);
 };
